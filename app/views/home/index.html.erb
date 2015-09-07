@@ -1,0 +1,25 @@
+<div class="content">
+  <div class="row">
+    <div class="span8">
+      <h2>Новости</h2>
+
+      <table class="table">
+        <% @posts.each do |item| next if item.class == Fixnum %>
+          <tr>
+            <td>
+              <%= link_to vk_url_id(item['from_id']), target: '_blank' do %> USER
+              <% end %>
+            </td>
+
+            <td class="wide">
+              <div class="pull-right"><%= formatted_time_for(item["date"]) %></div>
+
+              <p><%=raw render_links(item["text"]) %></p>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+
+  </div>
+</div>
