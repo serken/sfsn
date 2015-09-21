@@ -1,5 +1,12 @@
 class SessionsController < ApplicationController
 
+  def fb_new
+    current_user.fb_token = auth_hash['credentials']['token']
+    current_user.fb_id = auth_hash['uid']
+    current_user.save
+    redirect_to root_url
+  end
+
   def new
     srand
     session[:state] ||= Digest::MD5.hexdigest(rand.to_s)
@@ -11,16 +18,23 @@ class SessionsController < ApplicationController
     redirect_to root_url, alert: 'Ошибка авторизации, попробуйте войти еще раз.' and return if session[:state].present? && session[:state] != params[:state]
 
     @vk = VkontakteApi.authorize(code: params[:code])
-    session[:token] = @vk.token
-    session[:vk_id] = @vk.user_id
+    current_user.vk_token = @vk.token
+    current_user.vk_id = @vk.user_id
+    current_user.save
 
     redirect_to root_url
   end
 
   def destroy
-    session[:token] = nil
-    session[:vk_id] = nil
+    current_user.vk_token = nil
+    current_user.vk_id = nil
 
     redirect_to root_url
+  end
+
+  protected
+
+  def auth_hash
+    request.env['omniauth.auth']
   end
 end

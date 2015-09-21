@@ -1,7 +1,11 @@
 require 'logged_in_constraint'
 Rails.application.routes.draw do
+  #devise_for :users
+  devise_for :users, :controllers => { registrations: 'registrations' }
   get 'callback'  => 'sessions#callback'
   delete 'logout' => 'sessions#destroy'
-  root to: 'home#index', constraints: LoggedInConstraint.new, as: :home
-  root to: 'sessions#new'
+  root to: 'home#index'
+  get 'vk_board' => 'vk#index'
+  get 'connect_vk' => 'sessions#new'
+  get '/auth/facebook/callback', to: 'sessions#fb_new'
 end

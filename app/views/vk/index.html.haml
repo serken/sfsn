@@ -1,0 +1,13 @@
+.content
+  .row
+    .span8
+      - if @posts
+        %table.table
+          - @posts.each do |item| next if item.class == Fixnum
+            %tr
+              %td
+                = link_to vk_url_id(item['from_id']), target: '_blank' do
+                  USER
+              %td.wide
+                .pull-right= formatted_time_for(item["date"])
+                %p= raw render_links(item["text"])

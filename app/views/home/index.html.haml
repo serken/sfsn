@@ -1,0 +1,15 @@
+%h1
+  = "Hello " + current_user.nickname
+%h2
+  VK:
+- if current_user.vk_token?
+  You are connected to vk.
+  = link_to 'Show me my board', 'vk_board'
+- else
+  = link_to 'Connect to VK', 'connect_vk'
+%h2
+  FB:
+- if current_user.fb_token?
+  You are connected to fb.
+- else
+  = link_to 'Connect to FB', '/auth/facebook'

@@ -24,8 +24,14 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'oauth2'
 gem 'vkontakte_api', '~> 1.4'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'fb_graph2'
 gem 'rest-client'
+gem 'mysql2'
 gem 'pry'
+gem 'devise'
+gem 'haml'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
