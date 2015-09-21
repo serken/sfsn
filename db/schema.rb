@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150921112145) do
+ActiveRecord::Schema.define(version: 20150921192439) do
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -30,7 +30,9 @@ ActiveRecord::Schema.define(version: 20150921112145) do
     t.string   "nickname",               limit: 16
     t.integer  "vk_id",                  limit: 4
     t.string   "fb_token",               limit: 255
-    t.integer  "fb_id",                  limit: 5
+    t.integer  "fb_id",                  limit: 8
+    t.integer  "vk_group_id",            limit: 8
+    t.integer  "fb_group_id",            limit: 8
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

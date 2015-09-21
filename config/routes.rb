@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   get 'connect_vk' => 'sessions#new'
   get '/auth/facebook/callback', to: 'sessions#fb_new'
   get 'post_to_fb' => 'home#test'
+  get 'update_group_id' => 'home#update_group_id'
 end
