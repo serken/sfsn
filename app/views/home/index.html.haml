@@ -11,5 +11,8 @@
   FB:
 - if current_user.fb_token?
   You are connected to fb.
+  = link_to 'Send HELLO to FB', 'post_to_fb'
+  - if @response
+    = @response
 - else
   = link_to 'Connect to FB', '/auth/facebook'
