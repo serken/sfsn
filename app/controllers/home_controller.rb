@@ -1,24 +1,24 @@
 class HomeController < ApplicationController
 
+  skip_before_filter :authenticate_user!, only: :index
+
   def index
   end
 
   def test
-    post_message
+    text = ServiceApi.get_from_vk_group(group_id: current_user.vk_group_id)
+    ServiceApi.post_to_fb_group({message: text, token: current_user.token, group_id: current_user.fb_group_id})
     redirect_to root_url
   end
 
+  def update_group
+    @user = current_user
+  end
+
   def update_group_id
-
+    current_user.fb_group_id = params[:fb_group_id]
+    current_user.vk_group_id = params[:vk_group_id]
+    current_user.save
+    redirect_to root_url
   end
-
-  private
-
-  def post_message
-    fb_group_id = 625591437543689
-    vk_group_id = -32728983
-    text = VkontakteApi::Client.new.wall.get(owner_id: vk_group_id, filters: 'owner', offset: 2, count: 2)[2].text
-    RestClient.post("https://graph.facebook.com/#{fb_group_id}/feed?access_token=#{current_user.fb_token}", message: text)
-  end
-
 end

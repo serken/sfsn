@@ -24,6 +24,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'oauth2'
 gem 'vkontakte_api', '~> 1.4'
+gem 'bootstrap-sass', '~> 3.3.5.1'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'fb_graph2'

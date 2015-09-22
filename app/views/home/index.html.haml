@@ -1,26 +1,25 @@
 %h1
-  = "Hello " + current_user.nickname
-%h2
-  VK:
-- if current_user.vk_token
-  You are connected to vk.
-  = link_to 'Show me my board', 'vk_board'
-  %br
-  Vk Group Id:
-  - if current_user.vk_group_id
+  = "Hello " + (current_user.nil? ? "Guest. Sign in to use Service" : current_user.nickname.to_s)
+- if current_user
+  %h2
+    VK:
+  - if current_user.vk_token
+    You are connected to vk.
     %br
-    current_user.vk_group_id
-- else
-  = link_to 'Connect to VK', 'connect_vk'
-%h2
-  FB:
-- if current_user.fb_token?
-  You are connected to fb.
-  = link_to 'Send HELLO to FB', 'post_to_fb'
-  %br
-  Fb Group Id:
-  - if current_user.fb_group_id
+    Vk Group Id:
+    - if current_user.vk_group_id
+      %br
+      = current_user.vk_group_id
+  - else
+    = link_to 'Connect to VK', 'connect_vk'
+  %h2
+    FB:
+  - if current_user.fb_token?
+    You are connected to fb.
     %br
-    current_user.fb_group_id
-- else
-  = link_to 'Connect to FB', '/auth/facebook'
+    Fb Group Id:
+    - if current_user.fb_group_id
+      %br
+      = current_user.fb_group_id
+  - else
+    = link_to 'Connect to FB', '/auth/facebook'

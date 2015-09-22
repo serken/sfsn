@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class GroupAuthorizeController < ApplicationController
 
   def fb_new
     current_user.fb_token = auth_hash['credentials']['token']
@@ -7,14 +7,14 @@ class SessionsController < ApplicationController
     redirect_to root_url
   end
 
-  def new
+  def vk_new
     srand
     session[:state] ||= Digest::MD5.hexdigest(rand.to_s)
 
     @vk_url = VkontakteApi.authorization_url(scope: [:friends, :groups, :offline, :notify], state: session[:state])
   end
 
-  def callback
+  def vk_callback
     redirect_to root_url, alert: 'Ошибка авторизации, попробуйте войти еще раз.' and return if session[:state].present? && session[:state] != params[:state]
 
     @vk = VkontakteApi.authorize(code: params[:code])
@@ -25,7 +25,7 @@ class SessionsController < ApplicationController
     redirect_to root_url
   end
 
-  def destroy
+  def vk_destroy
     current_user.vk_token = nil
     current_user.vk_id = nil
 
