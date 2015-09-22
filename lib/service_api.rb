@@ -15,6 +15,6 @@ module ServiceApi
 
   def self.get_from_vk_group(params)
     group_id = params[:group_id]
-    VkontakteApi::Client.new.wall.get(owner_id: group_id, filters: 'owner')["items"].first["text"]
+    VkontakteApi::Client.new.wall.get(owner_id: - group_id, filters: 'owner')["items"].first["text"]
   end
 end
