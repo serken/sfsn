@@ -7,9 +7,9 @@
     You are connected to vk.
     %br
     Vk Group Id:
-    - if current_user.vk_group_id
+    - if current_user.vk_group
       %br
-      = current_user.vk_group_id
+      = current_user.vk_group
   - else
     = link_to 'Connect to VK', 'connect_vk'
   %h2
@@ -18,8 +18,8 @@
     You are connected to fb.
     %br
     Fb Group Id:
-    - if current_user.fb_group_id
+    - if current_user.fb_group
       %br
-      = current_user.fb_group_id
+      = current_user.fb_group
   - else
     = link_to 'Connect to FB', '/auth/facebook'

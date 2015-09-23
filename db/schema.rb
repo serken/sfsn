@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 20150921192439) do
     t.integer  "vk_id",                  limit: 4
     t.string   "fb_token",               limit: 255
     t.integer  "fb_id",                  limit: 8
-    t.integer  "vk_group_id",            limit: 8
-    t.integer  "fb_group_id",            limit: 8
+    t.string  "vk_group",            limit: 255
+    t.string  "fb_group",            limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
