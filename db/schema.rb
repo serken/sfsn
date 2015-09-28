@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150921192439) do
+ActiveRecord::Schema.define(version: 20150928090621) do
+
+  create_table "fb_groups", force: :cascade do |t|
+    t.string   "name",              limit: 255
+    t.datetime "last_message_time"
+    t.integer  "user_id",           limit: 4
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -31,11 +37,15 @@ ActiveRecord::Schema.define(version: 20150921192439) do
     t.integer  "vk_id",                  limit: 4
     t.string   "fb_token",               limit: 255
     t.integer  "fb_id",                  limit: 8
-    t.string  "vk_group",            limit: 255
-    t.string  "fb_group",            limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "vk_groups", force: :cascade do |t|
+    t.string   "name",              limit: 255
+    t.datetime "last_message_time"
+    t.integer  "user_id",           limit: 4
+  end
 
 end

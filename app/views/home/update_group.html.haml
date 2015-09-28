@@ -1,8 +1,8 @@
 = form_tag("/update_group_id", method: "post") do
   = label_tag :vk_group, "Vk Group Id"
-  = text_field_tag :vk_group, current_user.vk_group
+  = text_field_tag :vk_group, current_user.vk_group.try(:name) || ""
   %br
   = label_tag :fb_group, "Fb Group Id"
-  = text_field_tag :fb_group, current_user.fb_group
+  = text_field_tag :fb_group, current_user.fb_group.try(:name) || ""
   %br
   = submit_tag("Update groups ids")

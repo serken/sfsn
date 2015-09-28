@@ -1,4 +1,6 @@
 module ServiceApi
+  @vk = VkontakteApi::Client.new
+
   def check_fb_group_rights
   end
 
@@ -15,12 +17,11 @@ module ServiceApi
 
   def self.get_from_vk_group(params)
     group_id = - params[:group_id]
-    VkontakteApi::Client.new.wall.get(owner_id: group_id, filters: 'owner').third.text
+    @vk.wall.get(owner_id: group_id, filters: 'owner').third.text
   end
 
   def self.get_vk_group_id(group)
-    VkontakteApi::Client.new.groups.get_by_id(group_ids: group).first.gid
-
+    @vk.groups.get_by_id(group_ids: group).first.gid
   end
 
   def self.check_vk_group(params)
@@ -29,7 +30,7 @@ module ServiceApi
     end
 
     begin
-      group = VkontakteApi::Client.new.groups.get_by_id(group_ids: ids).first
+      group = @vk.groups.get_by_id(group_ids: ids).first
       return nil if group
     rescue
       return 'No Vk group found'
@@ -42,7 +43,7 @@ module ServiceApi
     end
 
     begin
-      group = VkontakteApi::Client.new.groups.get_by_id(group_ids: ids).first
+      group = RestClient.get("https://graph.facebook.com/#{ids}?access_token=#{params[:token]}")
       return nil if group
     rescue
       return 'No Fb group found'

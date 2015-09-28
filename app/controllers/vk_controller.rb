@@ -1,5 +1,4 @@
 class SnController < ApplicationController
-  end
   def index
     raise ActionController::RoutingError.new('Not Found') unless current_user.vk_token
     vk = VkontakteApi::Client.new(current_user.vk_token)

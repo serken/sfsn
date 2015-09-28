@@ -6,15 +6,12 @@ class HomeController < ApplicationController
   end
 
   def test
-    begin
-      vk_group_id = ServiceApi.get_vk_group_id(current_user.vk_group)
-      text = ServiceApi.get_from_vk_group(group_id: vk_group_id)
-      ServiceApi.post_to_fb_group({message: text, token: current_user.fb_token, group_id: current_user.fb_group})
-    rescue
-      redirect_to root_url, alert: "something goes wrong. try again later"
-      return
-    end
-    redirect_to root_url, notice: "Post has been copied"
+    params = {vk_group_name: current_user.vk_group.name, vk_token: current_user.vk_token,
+              fb_group_name: current_user.fb_group.name, fb_token: current_user.fb_token}
+
+    Resque.enqueue(CopyPosts, params)
+
+    redirect_to root_url, notice: "Posts will be copied"
   end
 
   def update_group
@@ -22,18 +19,20 @@ class HomeController < ApplicationController
   end
 
   def update_group_id
-    error = ServiceApi.check_vk_group(group: params[:vk_group])
-    if error
-      redirect_to update_group_path, alert: error
+    vk_group = VkGroup.first_or_create(name: params[:vk_group], user_id: current_user.id)
+    vk_group.user = current_user
+    unless vk_group.save
+      redirect_to update_group_path, alert: vk_group.errors
       return
     end
-    #error = ServiceApi.check_fb_group(group: params[:fb_group])
-    if error
-      redirect_to update_group_path, alert: error
+
+    fb_group = FbGroup.first_or_create(name: params[:fb_group], user_id: current_user.id)
+    fb_group.user = current_user
+    unless fb_group.save
+      redirect_to update_group_path, alert: fb_group.errors
       return
     end
-    current_user.fb_group = params[:fb_group]
-    current_user.vk_group = params[:vk_group]
+
     current_user.save
     redirect_to root_url
   end

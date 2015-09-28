@@ -9,7 +9,7 @@
     Vk Group Id:
     - if current_user.vk_group
       %br
-      = current_user.vk_group
+      = current_user.vk_group.name
   - else
     = link_to 'Connect to VK', 'connect_vk'
   %h2
@@ -20,6 +20,6 @@
     Fb Group Id:
     - if current_user.fb_group
       %br
-      = current_user.fb_group
+      = current_user.fb_group.name
   - else
     = link_to 'Connect to FB', '/auth/facebook'

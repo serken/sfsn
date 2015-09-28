@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  mount Resque::Server.new, at: '/resque'
+
   #devise_for :users
   devise_for :users, :controllers => { registrations: 'registrations' }
   get 'callback'  => 'group_authorize#vk_callback'
