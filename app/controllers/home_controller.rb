@@ -7,7 +7,8 @@ class HomeController < ApplicationController
 
   def test
     begin
-      text = ServiceApi.get_from_vk_group(group_id: current_user.vk_group)
+      vk_group_id = ServiceApi.get_vk_group_id(current_user.vk_group)
+      text = ServiceApi.get_from_vk_group(group_id: vk_group_id)
       ServiceApi.post_to_fb_group({message: text, token: current_user.fb_token, group_id: current_user.fb_group})
     rescue
       redirect_to root_url, alert: "something goes wrong. try again later"
@@ -26,7 +27,7 @@ class HomeController < ApplicationController
       redirect_to update_group_path, alert: error
       return
     end
-    error = ServiceApi.check_fb_group(group: params[:fb_group])
+    #error = ServiceApi.check_fb_group(group: params[:fb_group])
     if error
       redirect_to update_group_path, alert: error
       return

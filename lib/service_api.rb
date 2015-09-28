@@ -18,6 +18,11 @@ module ServiceApi
     VkontakteApi::Client.new.wall.get(owner_id: group_id, filters: 'owner').third.text
   end
 
+  def self.get_vk_group_id(group)
+    VkontakteApi::Client.new.groups.get_by_id(group_ids: group).first.gid
+
+  end
+
   def self.check_vk_group(params)
     unless ids = params[:group]
       return 'No Vk group selected'
