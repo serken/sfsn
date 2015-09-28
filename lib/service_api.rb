@@ -15,9 +15,9 @@ module ServiceApi
     RestClient.post("https://graph.facebook.com/#{fb_group}/feed?access_token=#{token}", message: message)
   end
 
-  def self.get_from_vk_group(params)
+  def self.get_group_from_vk(params)
     group_id = - params[:group_id]
-    @vk.wall.get(owner_id: group_id, filters: 'owner').third.text
+    @vk.wall.get(owner_id: group_id, filters: 'owner')
   end
 
   def self.get_vk_group_id(group)
